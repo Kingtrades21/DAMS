@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condemnation Form - Annexure V</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+        h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #555;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1090px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px 15px;
+            text-align: left;
+            font-size: 16px;
+        }
+        th:nth-child(1), td:nth-child(1) { min-width: 25px; }
+        th:nth-child(2), td:nth-child(2) { min-width: 140px; }
+        th:nth-child(3), td:nth-child(3),
+        th:nth-child(4), td:nth-child(4),
+        th:nth-child(5), td:nth-child(5),
+        th:nth-child(6), td:nth-child(6),
+        th:nth-child(7), td:nth-child(7) { min-width: 75px; }
+        th:nth-child(8), td:nth-child(8),
+        th:nth-child(9), td:nth-child(9),
+        th:nth-child(10), td:nth-child(10),
+        th:nth-child(11), td:nth-child(11),
+        th:nth-child(12), td:nth-child(12) { min-width: 110px; }
+        th {
+            background-color: #fff;
+            font-weight: bold;
+            color: #333;
+        }
+        td {
+            background-color: #fff;
+        }
+        textarea {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            padding: 0;
+            text-align: left;
+            white-space: pre-wrap;
+            resize: none;
+            overflow: hidden;
+            line-height: 1.2;
+            min-height: 20px;
+        }
+        textarea:focus {
+            outline: none;
+        }
+        input[type="date"] {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            padding: 0;
+            text-align: left;
+        }
+        input[type="date"]:focus {
+            outline: none;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 20px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .signature-section div {
+            width: 45%;
+        }
+        .signature-line {
+            width: 200px;
+            border-bottom: 1px solid #333;
+            display: inline-block;
+            vertical-align: baseline;
+            position: relative;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
+        .signature-line input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            padding: 0;
+            position: absolute;
+            top: -15px;
+            left: 0;
+            color: #333;
+            text-align: left;
+        }
+        .signature-line input:focus {
+            outline: none;
+            color: #333;
+        }
+        .committee-list {
+            margin-left: 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .committee-list p {
+            margin: 5px 0;
+        }
+        .committee-members-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .committee-members-row p {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .committee-members-row p:last-child {
+            margin-right: 0;
+        }
+        .submit-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 1280px) {
+            .table-container {
+                overflow-x: auto;
+            }
+            th, td {
+                font-size: 14px;
+                padding: 10px 10px;
+            }
+            th:nth-child(1), td:nth-child(1) { min-width: 25px; }
+            th:nth-child(2), td:nth-child(2) { min-width: 140px; }
+            th:nth-child(3), td:nth-child(3),
+            th:nth-child(4), td:nth-child(4),
+            th:nth-child(5), td:nth-child(5),
+            th:nth-child(6), td:nth-child(6),
+            th:nth-child(7), td:nth-child(7) { min-width: 75px; }
+            th:nth-child(8), td:nth-child(8),
+            th:nth-child(9), td:nth-child(9),
+            th:nth-child(10), td:nth-child(10),
+            th:nth-child(11), td:nth-child(11),
+            th:nth-child(12), td:nth-child(12) { min-width: 110px; }
+        }
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px;
+            }
+            th, td {
+                font-size: 12px;
+                padding: 10px 5px;
+            }
+            th:nth-child(1), td:nth-child(1) { min-width: 20px; }
+            th:nth-child(2), td:nth-child(2) { min-width: 100px; }
+            th:nth-child(3), td:nth-child(3),
+            th:nth-child(4), td:nth-child(4),
+            th:nth-child(5), td:nth-child(5),
+            th:nth-child(6), td:nth-child(6),
+            th:nth-child(7), td:nth-child(7) { min-width: 60px; }
+            th:nth-child(8), td:nth-child(8),
+            th:nth-child(9), td:nth-child(9),
+            th:nth-child(10), td:nth-child(10),
+            th:nth-child(11), td:nth-child(11),
+            th:nth-child(12), td:nth-child(12) { min-width: 80px; }
+            .signature-section {
+                flex-direction: column;
+            }
+            .signature-section div {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .committee-members-row {
+                flex-direction: column;
+            }
+            .committee-members-row p {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .submit-button {
+                position: static;
+                margin-top: 20px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Annexure V</h2>
+        <h3>Proforma</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Description of Stores/Items</th>
+                        <th>Quantity/Weight</th>
+                        <th>Book/Original Value</th>
+                        <th>Date of Purchase</th>
+                        <th>Date/Month of item becoming Unserviceable</th>
+                        <th>Period of use</th>
+                        <th>Present condition of service (In service/out of service)</th>
+                        <th>Whether effort have been taken to repair. If so thereof (also specify cost incurring)</th>
+                        <th>Location where the items are stored for condemnation</th>
+                        <th>Reason for Condemnation</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <!-- Update the table body in CondemnationFormsz.html -->
+<tbody>
+    <tr data-item-id="">
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><input type="date" id="purchaseDate1"><input type="hidden" class="item-id"></td>
+        <td><input type="date"></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea id="reason1"></textarea></td>
+        <td><textarea></textarea></td>
+    </tr>
+    <tr data-item-id="">
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><input type="date" id="purchaseDate2"><input type="hidden" class="item-id"></td>
+        <td><input type="date"></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea id="reason2"></textarea></td>
+        <td><textarea></textarea></td>
+    </tr>
+    <tr data-item-id="">
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><input type="date" id="purchaseDate3"><input type="hidden" class="item-id"></td>
+        <td><input type="date"></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea id="reason3"></textarea></td>
+        <td><textarea></textarea></td>
+    </tr>
+    <tr data-item-id="">
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><input type="date" id="purchaseDate4"><input type="hidden" class="item-id"></td>
+        <td><input type="date"></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea></textarea></td>
+        <td><textarea id="reason4"></textarea></td>
+        <td><textarea></textarea></td>
+    </tr>
+</tbody>
+            </table>
+        </div>
+
+        <div class="signature-section">
+            <div>
+                <div class="section-title">Prepared by:</div>
+                <p>Name: <span class="signature-line"><input type="text"></span></p>
+                <p>Designation: <span class="signature-line"><input type="text"></span></p>
+            </div>
+            <div>
+                <div class="section-title">Reviewed by:</div>
+                <p>Name: <span class="signature-line"><input type="text"></span></p>
+                <p>Designation: <span class="signature-line"><input type="text"></span></p>
+            </div>
+        </div>
+
+        <div class="section-title">Condemnation Committee Members</div>
+        <div class="committee-list">
+            <div class="committee-members-row">
+                <p>1. Name: Dr. Krupashankara M.S (Chairman)<br>Designation: Principal</p>
+                <p>2. Name: <span class="signature-line"><input type="text"></span> (Member)<br>Designation: <span class="signature-line"><input type="text"></span></p>
+                <p>3. Name: Shri. Sunil Rauf (Member)<br>Designation: <span class="signature-line"><input type="text"></span></p>
+            </div>
+            <p>4. Name: <span class="signature-line"><input type="text"></span> (Member)</p>
+            <p>5. Name: <span class="signature-line"><input type="text"></span> (Invited Member)</p>
+        </div>
+
+        <button class="submit-button">Submit</button>
+    </div>
+<script>
+    // Dynamically adjust textarea height based on content
+    document.querySelectorAll('textarea').forEach(textarea => {
+        textarea.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = `${this.scrollHeight}px`;
+        });
+        textarea.dispatchEvent(new Event('input'));
+    });
+
+    // Pre-fill fields from localStorage and handle editing
+    window.onload = function () {
+    console.log('Page loaded. Initializing form...');
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestId = urlParams.get('requestId'); // Get the requestId from the URL
+    const rows = document.querySelectorAll('tbody tr');
+
+    // Handle editing existing condemnation form
+    if (requestId) {
+        console.log(`Editing form with requestId: ${requestId}`);
+        openFormForEditing(requestId);
+    }
+    // Handle pre-fill for new form
+    else {
+        console.log('Loading pre-filled data from condemnationFormData');
+        const formData = JSON.parse(localStorage.getItem('condemnationFormData') || []);
+        formData.slice(0, 4).forEach((item, index) => {
+            const row = rows[index];
+            row.querySelector('td:nth-child(2) textarea').value = item.productName || '';
+            row.querySelector('td:nth-child(3) textarea').value = '1'; // Default quantity
+            row.querySelector('td:nth-child(5) input[type="date"]').value = item.purchaseDate || '';
+            row.querySelector('td:nth-child(11) textarea').value = item.reason || '';
+            if (item.id) {
+                row.querySelector('.item-id').value = item.id;
+                row.dataset.itemId = item.id;
+            }
+        });
+        localStorage.removeItem('condemnationFormData'); // Clean up
+    }
+
+    // Adjust textarea heights
+    document.querySelectorAll('textarea').forEach(textarea => textarea.dispatchEvent(new Event('input')));
+
+    // Attach submit button event listener
+    const submitButton = document.querySelector('.submit-button');
+    if (submitButton) {
+        console.log('Submit button found. Attaching event listener...');
+        submitButton.addEventListener('click', handleFormSubmission);
+    } else {
+        console.error('Submit button not found!');
+    }
+};
+
+    // Handle form submission (new or update)
+    function handleFormSubmission() {
+        console.log('Submit button clicked. Handling form submission...');
+        const urlParams = new URLSearchParams(window.location.search);
+        const requestId = urlParams.get('requestId');
+
+        if (requestId) {
+            console.log(`Updating form with requestId: ${requestId}`);
+            updateForm(requestId); // Update existing form
+        } else {
+            console.log('Submitting new form...');
+            submitNewForm(); // Submit new form
+        }
+    }
+
+    // Function to submit a new form
+    function submitNewForm() {
+    console.log('Submitting new form...');
+    const rows = document.querySelectorAll('tbody tr');
+    const submittedForm = {
+        requestId: `REQ${Date.now()}`, // Unique ID based on timestamp
+        timestamp: new Date().toISOString(),
+        status: 'Pending Review',
+        items: []
+    };
+
+    rows.forEach((row, index) => {
+        const itemData = {
+            srNo: row.querySelector('td:nth-child(1) textarea').value,
+            description: row.querySelector('td:nth-child(2) textarea').value,
+            quantity: row.querySelector('td:nth-child(3) textarea').value,
+            bookValue: row.querySelector('td:nth-child(4) textarea').value,
+            purchaseDate: row.querySelector('td:nth-child(5) input').value,
+            unserviceableDate: row.querySelector('td:nth-child(6) input').value,
+            periodOfUse: row.querySelector('td:nth-child(7) textarea').value,
+            presentCondition: row.querySelector('td:nth-child(8) textarea').value,
+            repairEfforts: row.querySelector('td:nth-child(9) textarea').value,
+            location: row.querySelector('td:nth-child(10) textarea').value,
+            reason: row.querySelector('td:nth-child(11) textarea').value,
+            remarks: row.querySelector('td:nth-child(12) textarea').value,
+            itemId: row.dataset.itemId || null
+        };
+
+        if (Object.values(itemData).some(val => val)) {
+            submittedForm.items.push(itemData);
+        }
+    });
+
+    // Save to localStorage
+    const existingForms = JSON.parse(localStorage.getItem('condemnationForms') || []);
+    localStorage.setItem('condemnationForms', JSON.stringify([...existingForms, submittedForm]));
+
+    // Notify parent window (index.html)
+    if (window.opener && !window.opener.closed) {
+        console.log('Notifying parent window about new submission...');
+        window.opener.postMessage({
+            type: 'new-condemnation',
+            data: submittedForm
+        }, '*');
+    }
+
+    // Show confirmation and redirect
+    alert('Form submitted successfully! Redirecting to Maintenance Records...');
+    console.log('Form submitted. Redirecting to Maintenance Records...');
+
+    // Redirect to Maintenance Records module
+    if (window.opener && !window.opener.closed) {
+        window.opener.location.hash = '#maintenance'; // Navigate to Maintenance Records
+        window.close(); // Close the form window
+    } else {
+        window.location.href = 'index.html#maintenance'; // Fallback for standalone testing
+    }
+}
+
+    // Function to open form for editing
+    function openFormForEditing(requestId) {
+    console.log(`Opening form for editing with requestId: ${requestId}`);
+    const forms = JSON.parse(localStorage.getItem('condemnationForms') || []);
+    const formData = forms.find(f => f.requestId === requestId);
+
+    if (!formData) {
+        console.error('Form not found!');
+        alert('Form not found!');
+        return;
+    }
+
+    // Populate form fields
+    const rows = document.querySelectorAll('tbody tr');
+    formData.items.forEach((item, index) => {
+        const row = rows[index];
+        if (row) {
+            row.querySelector('td:nth-child(1) textarea').value = item.srNo || '';
+            row.querySelector('td:nth-child(2) textarea').value = item.description || '';
+            row.querySelector('td:nth-child(3) textarea').value = item.quantity || '';
+            row.querySelector('td:nth-child(4) textarea').value = item.bookValue || '';
+            row.querySelector('td:nth-child(5) input').value = item.purchaseDate || '';
+            row.querySelector('td:nth-child(6) input').value = item.unserviceableDate || '';
+            row.querySelector('td:nth-child(7) textarea').value = item.periodOfUse || '';
+            row.querySelector('td:nth-child(8) textarea').value = item.presentCondition || '';
+            row.querySelector('td:nth-child(9) textarea').value = item.repairEfforts || '';
+            row.querySelector('td:nth-child(10) textarea').value = item.location || '';
+            row.querySelector('td:nth-child(11) textarea').value = item.reason || '';
+            row.querySelector('td:nth-child(12) textarea').value = item.remarks || '';
+            if (item.itemId) {
+                row.querySelector('.item-id').value = item.itemId;
+                row.dataset.itemId = item.itemId;
+            }
+        }
+    });
+
+    // Update submit button to handle edits
+    const submitButton = document.querySelector('.submit-button');
+    if (submitButton) {
+        submitButton.textContent = 'Update Form';
+        console.log('Submit button updated to "Update Form"');
+    }
+}
+
+    // Function to update an existing form
+    function updateForm(requestId) {
+    console.log(`Updating form with requestId: ${requestId}`);
+    const forms = JSON.parse(localStorage.getItem('condemnationForms') || []);
+    const formIndex = forms.findIndex(f => f.requestId === requestId);
+
+    if (formIndex === -1) {
+        console.error('Form not found!');
+        alert('Form not found!');
+        return;
+    }
+
+    // Collect updated data
+    const updatedForm = {
+        ...forms[formIndex],
+        items: []
+    };
+
+    const rows = document.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        const itemData = {
+            srNo: row.querySelector('td:nth-child(1) textarea').value,
+            description: row.querySelector('td:nth-child(2) textarea').value,
+            quantity: row.querySelector('td:nth-child(3) textarea').value,
+            bookValue: row.querySelector('td:nth-child(4) textarea').value,
+            purchaseDate: row.querySelector('td:nth-child(5) input').value,
+            unserviceableDate: row.querySelector('td:nth-child(6) input').value,
+            periodOfUse: row.querySelector('td:nth-child(7) textarea').value,
+            presentCondition: row.querySelector('td:nth-child(8) textarea').value,
+            repairEfforts: row.querySelector('td:nth-child(9) textarea').value,
+            location: row.querySelector('td:nth-child(10) textarea').value,
+            reason: row.querySelector('td:nth-child(11) textarea').value,
+            remarks: row.querySelector('td:nth-child(12) textarea').value,
+            itemId: row.dataset.itemId || null
+        };
+
+        if (Object.values(itemData).some(val => val)) {
+            updatedForm.items.push(itemData);
+        }
+    });
+
+    // Update the form in storage
+    forms[formIndex] = updatedForm;
+    localStorage.setItem('condemnationForms', JSON.stringify(forms));
+
+    // Notify parent window
+    if (window.opener && !window.opener.closed) {
+        console.log('Notifying parent window about form update...');
+        window.opener.postMessage({
+            type: 'update-condemnation',
+            data: updatedForm
+        }, '*');
+    }
+
+    alert('Form updated successfully! Redirecting to Maintenance Records...');
+    console.log('Form updated. Redirecting to Maintenance Records...');
+
+    // Redirect to Maintenance Records module
+    if (window.opener && !window.opener.closed) {
+        window.opener.location.hash = '#maintenance'; // Navigate to Maintenance Records
+        window.close(); // Close the form window
+    } else {
+        window.location.href = 'index.html#maintenance'; // Fallback for standalone testing
+    }
+}
+    // Handle messages from parent window (for editing)
+    window.addEventListener('message', (event) => {
+        if (event.data.type === 'edit-condemnation') {
+            console.log('Received edit request from parent window');
+            openFormForEditing(event.data.requestId);
+        }
+    });
+</script>
+</body>
+</html>
