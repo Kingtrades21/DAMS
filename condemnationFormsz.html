@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condemnation Form - Annexure V</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+        h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #555;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1090px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px 15px;
+            text-align: left;
+            font-size: 16px;
+        }
+        th:nth-child(1), td:nth-child(1) { min-width: 25px; }
+        th:nth-child(2), td:nth-child(2) { min-width: 140px; }
+        th:nth-child(3), td:nth-child(3),
+        th:nth-child(4), td:nth-child(4),
+        th:nth-child(5), td:nth-child(5),
+        th:nth-child(6), td:nth-child(6),
+        th:nth-child(7), td:nth-child(7) { min-width: 75px; }
+        th:nth-child(8), td:nth-child(8),
+        th:nth-child(9), td:nth-child(9),
+        th:nth-child(10), td:nth-child(10),
+        th:nth-child(11), td:nth-child(11),
+        th:nth-child(12), td:nth-child(12) { min-width: 110px; }
+        th {
+            background-color: #fff;
+            font-weight: bold;
+            color: #333;
+        }
+        td {
+            background-color: #fff;
+        }
+        textarea {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            padding: 0;
+            text-align: left;
+            white-space: pre-wrap;
+            resize: none;
+            overflow: hidden;
+            line-height: 1.2;
+            min-height: 20px;
+        }
+        textarea:focus {
+            outline: none;
+        }
+        input[type="date"] {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            padding: 0;
+            text-align: left;
+        }
+        input[type="date"]:focus {
+            outline: none;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 20px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .signature-section div {
+            width: 45%;
+        }
+        .signature-line {
+            width: 200px;
+            border-bottom: 1px solid #333;
+            display: inline-block;
+            vertical-align: baseline;
+            position: relative;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
+        .signature-line input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            padding: 0;
+            position: absolute;
+            top: -15px;
+            left: 0;
+            color: #333;
+            text-align: left;
+        }
+        .signature-line input:focus {
+            outline: none;
+            color: #333;
+        }
+        .committee-list {
+            margin-left: 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .committee-list p {
+            margin: 5px 0;
+        }
+        .committee-members-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .committee-members-row p {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .committee-members-row p:last-child {
+            margin-right: 0;
+        }
+        .submit-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 1280px) {
+            .table-container {
+                overflow-x: auto;
+            }
+            th, td {
+                font-size: 14px;
+                padding: 10px 10px;
+            }
+        }
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px;
+            }
+            th, td {
+                font-size: 12px;
+                padding: 10px 5px;
+            }
+            .signature-section {
+                flex-direction: column;
+            }
+            .signature-section div {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .committee-members-row {
+                flex-direction: column;
+            }
+            .committee-members-row p {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .submit-button {
+                position: static;
+                margin-top: 20px;
+                width: 100%;
+            }
+        }
+    input:disabled, textarea:disabled {
+    background-color: #f5f5f5;
+    color: #666;
+    cursor: not-allowed;
+}
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Annexure V</h2>
+        <h3>Proforma</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Description of Stores/Items</th>
+                        <th>Quantity/Weight</th>
+                        <th>Book/Original Value</th>
+                        <th>Date of Purchase</th>
+                        <th>Date/Month of item becoming Unserviceable</th>
+                        <th>Period of use</th>
+                        <th>Present condition of service (In service/out of service)</th>
+                        <th>Whether effort have been taken to repair. If so thereof (also specify cost incurring)</th>
+                        <th>Location where the items are stored for condemnation</th>
+                        <th>Reason for Condemnation</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-item-id="">
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><input type="date" id="purchaseDate1"><input type="hidden" class="item-id"></td>
+                        <td><input type="date"></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea id="reason1"></textarea></td>
+                        <td><textarea></textarea></td>
+                    </tr>
+                    <tr data-item-id="">
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><input type="date" id="purchaseDate2"><input type="hidden" class="item-id"></td>
+                        <td><input type="date"></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea id="reason2"></textarea></td>
+                        <td><textarea></textarea></td>
+                    </tr>
+                    <tr data-item-id="">
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><input type="date" id="purchaseDate3"><input type="hidden" class="item-id"></td>
+                        <td><input type="date"></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea id="reason3"></textarea></td>
+                        <td><textarea></textarea></td>
+                    </tr>
+                    <tr data-item-id="">
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><input type="date" id="purchaseDate4"><input type="hidden" class="item-id"></td>
+                        <td><input type="date"></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea></textarea></td>
+                        <td><textarea id="reason4"></textarea></td>
+                        <td><textarea></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="signature-section">
+            <div>
+                <div class="section-title">Prepared by:</div>
+                <p>Name: <span class="signature-line"><input type="text"></span></p>
+                <p>Designation: <span class="signature-line"><input type="text"></span></p>
+            </div>
+            <div>
+                <div class="section-title">Reviewed by:</div>
+                <p>Name: <span class="signature-line"><input type="text"></span></p>
+                <p>Designation: <span class="signature-line"><input type="text"></span></p>
+            </div>
+        </div>
+
+        <div class="section-title">Condemnation Committee Members</div>
+        <div class="committee-list">
+            <div class="committee-members-row">
+                <p>1. Name: Dr. Krupashankara M.S (Chairman)<br>Designation: Principal</p>
+                <p>2. Name: <span class="signature-line"><input type="text"></span> (Member)<br>Designation: <span class="signature-line"><input type="text"></span></p>
+                <p>3. Name: Shri. Sunil Rauf (Member)<br>Designation: <span class="signature-line"><input type="text"></span></p>
+            </div>
+            <p>4. Name: <span class="signature-line"><input type="text"></span> (Member)</p>
+            <p>5. Name: <span class="signature-line"><input type="text"></span> (Invited Member)</p>
+        </div>
+<!-- Add this after the committee-list -->
+<div class="disposal-section" style="display: none;">
+    <div class="section-title">Disposal Verification</div>
+    <div class="disposal-verification">
+        <p>Name: <span class="signature-line"><input type="text"></span></p>
+        <p>Designation: <span class="signature-line"><input type="text"></span></p>
+        <p>Date: <input type="date"></p>
+    </div>
+
+    <div class="section-title">Witnesses</div>
+    <div class="witnesses">
+        <div class="committee-members-row">
+            <p>Witness 1 Name: <span class="signature-line"><input type="text"></span></p>
+            <p>Witness 1 Designation: <span class="signature-line"><input type="text"></span></p>
+        </div>
+        <div class="committee-members-row">
+            <p>Witness 2 Name: <span class="signature-line"><input type="text"></span></p>
+            <p>Witness 2 Designation: <span class="signature-line"><input type="text"></span></p>
+        </div>
+    </div>
+</div>
+        <button class="submit-button" id="submitButton">Submit</button>
+        
+    </div>
+<script>
+    document.querySelectorAll('textarea').forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = `${this.scrollHeight}px`;
+        });
+        textarea.dispatchEvent(new Event('input'));
+    });
+
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const requestId = urlParams.get('requestId');
+
+        // Set profile role explicitly for Disposal Assistant dashboard
+        let profile = JSON.parse(localStorage.getItem('profile') || '{}');
+        if (requestId && !profile.role) {
+            profile.role = 'Lab Assistant'; // Default to Lab Assistant when viewing from Disposal Assistant
+            localStorage.setItem('profile', JSON.stringify(profile));
+        }
+
+        if (requestId) {
+            loadExistingForm(requestId);
+        } else {
+            loadPrefillData();
+        }
+
+        const submitButton = document.querySelector('.submit-button');
+        // Add both click and touchstart events for mobile compatibility
+        submitButton.addEventListener('click', handleFormSubmission);
+        submitButton.addEventListener('touchstart', handleFormSubmission);
+    };
+
+    function loadExistingForm(requestId) {
+        const forms = JSON.parse(localStorage.getItem('condemnationForms') || '[]');
+        const formData = forms.find(f => f.requestId === requestId);
+        const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+        const submitButton = document.querySelector('.submit-button');
+
+        if (formData) {
+            formData.items.forEach((item, index) => {
+                const row = document.querySelectorAll('tbody tr')[index];
+                if (row) {
+                    row.dataset.itemId = item.itemId || '';
+                    row.querySelector('td:nth-child(1) textarea').value = item.srNo || index + 1;
+                    row.querySelector('td:nth-child(2) textarea').value = item.description || item.productName || '';
+                    row.querySelector('td:nth-child(3) textarea').value = item.quantity || '';
+                    row.querySelector('td:nth-child(4) textarea').value = item.bookValue || '';
+                    row.querySelector('td:nth-child(5) input[type="date"]').value = item.purchaseDate || '';
+                    row.querySelector('td:nth-child(6) input[type="date"]').value = item.unserviceableDate || '';
+                    row.querySelector('td:nth-child(7) textarea').value = item.periodOfUse || '';
+                    row.querySelector('td:nth-child(8) textarea').value = item.condition || '';
+                    row.querySelector('td:nth-child(9) textarea').value = item.repairEfforts || '';
+                    row.querySelector('td:nth-child(10) textarea').value = item.location || '';
+                    row.querySelector('td:nth-child(11) textarea').value = item.reason || '';
+                    row.querySelector('td:nth-child(12) textarea').value = item.remarks || '';
+                    row.querySelectorAll('textarea').forEach(ta => ta.dispatchEvent(new Event('input')));
+                }
+            });
+
+            if (formData.preparedBy) {
+                document.querySelector('.signature-section div:first-child .signature-line input:first-child').value = formData.preparedBy.name || '';
+                document.querySelector('.signature-section div:first-child .signature-line input:last-child').value = formData.preparedBy.designation || '';
+            }
+            if (formData.reviewedBy) {
+                document.querySelector('.signature-section div:last-child .signature-line input:first-child').value = formData.reviewedBy.name || '';
+                document.querySelector('.signature-section div:last-child .signature-line input:last-child').value = formData.reviewedBy.designation || '';
+            }
+            if (formData.committeeMembers) {
+                document.querySelector('.committee-list .committee-members-row p:first-child').textContent = formData.committeeMembers[0].name + ' (Chairman)';
+                document.querySelector('.committee-list .committee-members-row p:nth-child(2) .signature-line input:first-child').value = formData.committeeMembers[1].name;
+                document.querySelector('.committee-list .committee-members-row p:nth-child(2) .signature-line input:last-child').value = formData.committeeMembers[1].designation;
+                document.querySelector('.committee-list .committee-members-row p:nth-child(3)').textContent = formData.committeeMembers[2].name + ' (Member)';
+                document.querySelector('.committee-list .committee-members-row p:nth-child(3) .signature-line input').value = formData.committeeMembers[2].designation;
+                document.querySelector('.committee-list p:nth-child(2) .signature-line input').value = formData.committeeMembers[3].name;
+                document.querySelector('.committee-list p:last-child .signature-line input').value = formData.committeeMembers[4].name;
+            }
+
+            // Set button text and editability based on role and status
+            submitButton.disabled = false;
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => input.disabled = false);
+
+            // Debug log to confirm values
+            console.log('Status:', formData.status, 'Role:', profile.role);
+            if (formData.status === 'pending_assistant' && (profile.role === 'Lab Assistant' || profile.role === 'lab_assistant')) {
+                submitButton.textContent = 'Update and Submit';
+            } else if (formData.status === 'pending_stores' && (profile.role === 'Stores' || profile.role === 'stores')) {
+                submitButton.textContent = 'Update and Save';
+                document.querySelector('.disposal-section').style.display = 'block';
+            } else {
+                submitButton.textContent = 'View Only';
+                submitButton.disabled = true;
+                inputs.forEach(input => input.disabled = true);
+            }
+        } else {
+            console.error(`Form with requestId ${requestId} not found`);
+            submitButton.textContent = 'Form Not Found';
+            submitButton.disabled = true;
+        }
+    }
+
+    function loadPrefillData() {
+        let prefillData = JSON.parse(localStorage.getItem('condemnationFormData') || '[]');
+        if (prefillData.length === 0) {
+            prefillData = [
+                { id: "1", productName: "Old Computer", purchaseDate: "2020-01-01", reason: "Hardware failure" }
+            ];
+            localStorage.setItem('condemnationFormData', JSON.stringify(prefillData));
+        }
+        prefillData.slice(0, 4).forEach((item, index) => {
+            const row = document.querySelectorAll('tbody tr')[index];
+            if (row) {
+                row.dataset.itemId = item.id || '';
+                row.querySelector('td:nth-child(1) textarea').value = index + 1;
+                row.querySelector('td:nth-child(2) textarea').value = item.productName || item.description || '';
+                row.querySelector('td:nth-child(5) input[type="date"]').value = item.purchaseDate || '';
+                row.querySelector('td:nth-child(11) textarea').value = item.reason || '';
+                row.querySelectorAll('textarea').forEach(ta => ta.dispatchEvent(new Event('input')));
+            }
+        });
+    }
+
+    function handleFormSubmission(event) {
+        event.preventDefault(); // Prevent default behavior on mobile
+        const urlParams = new URLSearchParams(window.location.search);
+        const requestId = urlParams.get('requestId');
+        const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+        let formData;
+
+        if (!requestId) {
+            formData = submitNewForm();
+        } else if ((profile.role === 'Lab Assistant' || profile.role === 'lab_assistant') && requestId) {
+            formData = updateAssistantForm(requestId);
+        } else if ((profile.role === 'Stores' || profile.role === 'stores') && requestId) {
+            formData = updateStoresForm(requestId);
+        }
+
+        if (formData) {
+            syncDisposalTables(formData);
+
+            if (formData.status === 'Approved, Disposed') {
+                moveToPastDisposals(formData);
+                removeFromMaintenanceRecords(formData);
+            }
+
+            if (window.opener && !window.opener.closed) {
+                const messageType = !requestId ? 'formSubmitted' : 
+                                   ((profile.role === 'Lab Assistant' || profile.role === 'lab_assistant') ? 'assistantUpdateSubmit' : 'storesUpdateSave');
+                window.opener.postMessage({
+                    type: messageType,
+                    success: true,
+                    requestId: formData.requestId,
+                    itemIds: formData.items.map(item => item.itemId),
+                    status: formData.status,
+                    formData: formData
+                }, '*');
+                window.close();
+            } else {
+                window.location.href = 'index.html#disposal';
+            }
+        }
+    }
+
+    function submitNewForm() {
+        const formData = {
+            requestId: `REQ-${Date.now()}`,
+            timestamp: new Date().toISOString(),
+            items: [],
+            status: 'pending_assistant',
+            preparedBy: {
+                name: document.querySelector('.signature-section div:first-child .signature-line input:first-child').value,
+                designation: document.querySelector('.signature-section div:first-child .signature-line input:last-child').value
+            },
+            reviewedBy: {
+                name: document.querySelector('.signature-section div:last-child .signature-line input:first-child').value,
+                designation: document.querySelector('.signature-section div:last-child .signature-line input:last-child').value
+            },
+            committeeMembers: [
+                { name: "Dr. Krupashankara M.S", designation: "Principal" },
+                {
+                    name: document.querySelector('.committee-list .committee-members-row p:nth-child(2) .signature-line input:first-child').value,
+                    designation: document.querySelector('.committee-list .committee-members-row p:nth-child(2) .signature-line input:last-child').value
+                },
+                {
+                    name: "Shri. Sunil Rauf",
+                    designation: document.querySelector('.committee-list .committee-members-row p:nth-child(3) .signature-line input').value
+                },
+                { name: document.querySelector('.committee-list p:nth-child(2) .signature-line input').value, designation: "" },
+                { name: document.querySelector('.committee-list p:last-child .signature-line input').value, designation: "" }
+            ]
+        };
+
+        document.querySelectorAll('tbody tr').forEach((row, index) => {
+            const itemData = {
+                itemId: row.dataset.itemId || '',
+                srNo: row.querySelector('td:nth-child(1) textarea')?.value || (index + 1),
+                description: row.querySelector('td:nth-child(2) textarea')?.value || '',
+                quantity: row.querySelector('td:nth-child(3) textarea')?.value || '',
+                bookValue: row.querySelector('td:nth-child(4) textarea')?.value || '',
+                purchaseDate: row.querySelector('td:nth-child(5) input[type="date"]')?.value || '',
+                unserviceableDate: row.querySelector('td:nth-child(6) input[type="date"]')?.value || '',
+                periodOfUse: row.querySelector('td:nth-child(7) textarea')?.value || '',
+                condition: row.querySelector('td:nth-child(8) textarea')?.value || '',
+                repairEfforts: row.querySelector('td:nth-child(9) textarea')?.value || '',
+                location: row.querySelector('td:nth-child(10) textarea')?.value || '',
+                reason: row.querySelector('td:nth-child(11) textarea')?.value || '',
+                remarks: row.querySelector('td:nth-child(12) textarea')?.value || ''
+            };
+            if (itemData.description || itemData.reason) {
+                formData.items.push(itemData);
+            }
+        });
+
+        if (formData.items.length === 0) {
+            alert('Please fill in at least one item with a description or reason.');
+            return null;
+        }
+
+        // Prevent duplicate storage
+        const existingForms = JSON.parse(localStorage.getItem('condemnationForms') || '[]');
+        const formExists = existingForms.some(f => f.requestId === formData.requestId);
+        if (!formExists) {
+            existingForms.push(formData);
+            localStorage.setItem('condemnationForms', JSON.stringify(existingForms));
+        }
+        localStorage.removeItem('condemnationFormData');
+        alert('Form submitted to Lab Assistant!');
+        return formData;
+    }
+
+    function updateAssistantForm(requestId) {
+        const forms = JSON.parse(localStorage.getItem('condemnationForms') || '[]');
+        const formIndex = forms.findIndex(f => f.requestId === requestId);
+
+        if (formIndex > -1) {
+            const updatedForm = forms[formIndex];
+            updatedForm.items = [];
+            updatedForm.status = 'pending_stores';
+            updatedForm.preparedBy = {
+                name: document.querySelector('.signature-section div:first-child .signature-line input:first-child').value,
+                designation: document.querySelector('.signature-section div:first-child .signature-line input:last-child').value
+            };
+            updatedForm.reviewedBy = {
+                name: document.querySelector('.signature-section div:last-child .signature-line input:first-child').value,
+                designation: document.querySelector('.signature-section div:last-child .signature-line input:last-child').value
+            };
+            updatedForm.committeeMembers = [
+                { name: "Dr. Krupashankara M.S", designation: "Principal" },
+                {
+                    name: document.querySelector('.committee-list .committee-members-row p:nth-child(2) .signature-line input:first-child').value,
+                    designation: document.querySelector('.committee-list .committee-members-row p:nth-child(2) .signature-line input:last-child').value
+                },
+                {
+                    name: "Shri. Sunil Rauf",
+                    designation: document.querySelector('.committee-list .committee-members-row p:nth-child(3) .signature-line input').value
+                },
+                { name: document.querySelector('.committee-list p:nth-child(2) .signature-line input').value, designation: "" },
+                { name: document.querySelector('.committee-list p:last-child .signature-line input').value, designation: "" }
+            ];
+
+            document.querySelectorAll('tbody tr').forEach((row, index) => {
+                const itemData = {
+                    itemId: row.dataset.itemId || '',
+                    srNo: row.querySelector('td:nth-child(1) textarea')?.value || (index + 1),
+                    description: row.querySelector('td:nth-child(2) textarea')?.value || '',
+                    quantity: row.querySelector('td:nth-child(3) textarea')?.value || '',
+                    bookValue: row.querySelector('td:nth-child(4) textarea')?.value || '',
+                    purchaseDate: row.querySelector('td:nth-child(5) input[type="date"]')?.value || '',
+                    unserviceableDate: row.querySelector('td:nth-child(6) input[type="date"]')?.value || '',
+                    periodOfUse: row.querySelector('td:nth-child(7) textarea')?.value || '',
+                    condition: row.querySelector('td:nth-child(8) textarea')?.value || '',
+                    repairEfforts: row.querySelector('td:nth-child(9) textarea')?.value || '',
+                    location: row.querySelector('td:nth-child(10) textarea')?.value || '',
+                    reason: row.querySelector('td:nth-child(11) textarea')?.value || '',
+                    remarks: row.querySelector('td:nth-child(12) textarea')?.value || ''
+                };
+                if (itemData.description || itemData.reason) {
+                    updatedForm.items.push(itemData);
+                }
+            });
+
+            if (updatedForm.items.length === 0) {
+                alert('Please fill in at least one item with a description or reason.');
+                return null;
+            }
+
+            forms[formIndex] = updatedForm;
+            localStorage.setItem('condemnationForms', JSON.stringify(forms));
+            alert('Form updated and submitted to Stores!');
+            return updatedForm;
+        }
+        return null;
+    }
+
+    function updateStoresForm(requestId) {
+        const forms = JSON.parse(localStorage.getItem('condemnationForms') || '[]');
+        const formIndex = forms.findIndex(f => f.requestId === requestId);
+
+        if (formIndex > -1) {
+            const updatedForm = forms[formIndex];
+            updatedForm.items = [];
+            updatedForm.status = 'Approved, Disposed';
+            updatedForm.disposalTimestamp = new Date().toISOString();
+            updatedForm.preparedBy = {
+                name: document.querySelector('.signature-section div:first-child .signature-line input:first-child').value,
+                designation: document.querySelector('.signature-section div:first-child .signature-line input:last-child').value
+            };
+            updatedForm.reviewedBy = {
+                name: document.querySelector('.signature-section div:last-child .signature-line input:first-child').value,
+                designation: document.querySelector('.signature-section div:last-child .signature-line input:last-child').value
+            };
+            updatedForm.committeeMembers = [
+                { name: "Dr. Krupashankara M.S", designation: "Principal" },
+                {
+                    name: document.querySelector('.committee-list .committee-members-row p:nth-child(2) .signature-line input:first-child').value,
+                    designation: document.querySelector('.committee-list .committee-members-row p:nth-child(2) .signature-line input:last-child').value
+                },
+                {
+                    name: "Shri. Sunil Rauf",
+                    designation: document.querySelector('.committee-list .committee-members-row p:nth-child(3) .signature-line input').value
+                },
+                { name: document.querySelector('.committee-list p:nth-child(2) .signature-line input').value, designation: "" },
+                { name: document.querySelector('.committee-list p:last-child .signature-line input').value, designation: "" }
+            ];
+
+            document.querySelectorAll('tbody tr').forEach((row, index) => {
+                const itemData = {
+                    itemId: row.dataset.itemId || '',
+                    srNo: row.querySelector('td:nth-child(1) textarea')?.value || (index + 1),
+                    description: row.querySelector('td:nth-child(2) textarea')?.value || '',
+                    quantity: row.querySelector('td:nth-child(3) textarea')?.value || '',
+                    bookValue: row.querySelector('td:nth-child(4) textarea')?.value || '',
+                    purchaseDate: row.querySelector('td:nth-child(5) input[type="date"]')?.value || '',
+                    unserviceableDate: row.querySelector('td:nth-child(6) input[type="date"]')?.value || '',
+                    periodOfUse: row.querySelector('td:nth-child(7) textarea')?.value || '',
+                    condition: row.querySelector('td:nth-child(8) textarea')?.value || '',
+                    repairEfforts: row.querySelector('td:nth-child(9) textarea')?.value || '',
+                    location: row.querySelector('td:nth-child(10) textarea')?.value || '',
+                    reason: row.querySelector('td:nth-child(11) textarea')?.value || '',
+                    remarks: row.querySelector('td:nth-child(12) textarea')?.value || ''
+                };
+                if (itemData.description || itemData.reason) {
+                    updatedForm.items.push(itemData);
+                }
+            });
+
+            if (updatedForm.items.length === 0) {
+                alert('Please fill in at least one item with a description or reason.');
+                return null;
+            }
+
+            forms[formIndex] = updatedForm;
+            localStorage.setItem('condemnationForms', JSON.stringify(forms));
+            alert('Form updated and items disposed!');
+            return updatedForm;
+        }
+        return null;
+    }
+
+    function syncDisposalTables(formData) {
+        const forms = JSON.parse(localStorage.getItem('condemnationForms') || '[]');
+        const formIndex = forms.findIndex(f => f.requestId === formData.requestId);
+
+        if (formIndex > -1) {
+            forms[formIndex] = formData; // Update existing form
+        } else {
+            forms.push(formData); // Add new form only if it doesn’t exist
+        }
+
+        localStorage.setItem('condemnationForms', JSON.stringify(forms));
+    }
+
+    function moveToPastDisposals(formData) {
+        const pastDisposals = JSON.parse(localStorage.getItem('pastDisposals') || '[]');
+        const disposalEntry = { ...formData, disposalTimestamp: formData.disposalTimestamp };
+        pastDisposals.push(disposalEntry);
+        localStorage.setItem('pastDisposals', JSON.stringify(pastDisposals));
+
+        // Remove from active forms
+        const forms = JSON.parse(localStorage.getItem('condemnationForms') || '[]');
+        const updatedForms = forms.filter(f => f.requestId !== formData.requestId);
+        localStorage.setItem('condemnationForms', JSON.stringify(updatedForms));
+    }
+
+    function removeFromMaintenanceRecords(formData) {
+        const maintenanceRecords = JSON.parse(localStorage.getItem('maintenanceRecords') || '[]');
+        const updatedRecords = maintenanceRecords.filter(record => 
+            !formData.items.some(item => item.itemId === record.itemId)
+        );
+        localStorage.setItem('maintenanceRecords', JSON.stringify(updatedRecords));
+    }
+</script>
+</body>
+</html>
