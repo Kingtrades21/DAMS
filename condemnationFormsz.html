@@ -214,6 +214,26 @@
     color: #666;
     cursor: not-allowed;
 }
+    
+     .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status-pending {
+            background-color: #FFD700;
+            color: #000;
+        }
+        .status-approved {
+            background-color: #32CD32;
+            color: #fff;
+        }
+        .status-disposed {
+            background-color: #1E90FF;
+            color: #fff;
+    
     </style>
 </head>
 <body>
@@ -363,7 +383,7 @@
         // Set profile role explicitly for Disposal Assistant dashboard
         let profile = JSON.parse(localStorage.getItem('profile') || '{}');
         if (requestId && !profile.role) {
-            profile.role = 'Lab Assistant'; // Default to Lab Assistant when viewing from Disposal Assistant
+            profile.role = 'Lab Assistant';
             localStorage.setItem('profile', JSON.stringify(profile));
         }
 
@@ -373,8 +393,7 @@
             loadPrefillData();
         }
 
-        const submitButton = document.querySelector('.submit-button');
-        // Add both click and touchstart events for mobile compatibility
+        const submitButton = document.getElementById('submitButton');
         submitButton.addEventListener('click', handleFormSubmission);
         submitButton.addEventListener('touchstart', handleFormSubmission);
     };
@@ -383,9 +402,11 @@
         const forms = JSON.parse(localStorage.getItem('condemnationForms') || '[]');
         const formData = forms.find(f => f.requestId === requestId);
         const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-        const submitButton = document.querySelector('.submit-button');
+        const submitButton = document.getElementById('submitButton');
+        const disposalSection = document.querySelector('.disposal-section');
 
         if (formData) {
+            // Fill form data
             formData.items.forEach((item, index) => {
                 const row = document.querySelectorAll('tbody tr')[index];
                 if (row) {
@@ -406,6 +427,7 @@
                 }
             });
 
+            // Fill signatures and committee members
             if (formData.preparedBy) {
                 document.querySelector('.signature-section div:first-child .signature-line input:first-child').value = formData.preparedBy.name || '';
                 document.querySelector('.signature-section div:first-child .signature-line input:last-child').value = formData.preparedBy.designation || '';
@@ -424,21 +446,36 @@
                 document.querySelector('.committee-list p:last-child .signature-line input').value = formData.committeeMembers[4].name;
             }
 
-            // Set button text and editability based on role and status
+            // Set form state based on status and role
             submitButton.disabled = false;
             const inputs = document.querySelectorAll('input, textarea');
-            inputs.forEach(input => input.disabled = false);
-
-            // Debug log to confirm values
-            console.log('Status:', formData.status, 'Role:', profile.role);
-            if (formData.status === 'pending_assistant' && (profile.role === 'Lab Assistant' || profile.role === 'lab_assistant')) {
-                submitButton.textContent = 'Update and Submit';
-            } else if (formData.status === 'pending_stores' && (profile.role === 'Stores' || profile.role === 'stores')) {
-                submitButton.textContent = 'Update and Save';
-                document.querySelector('.disposal-section').style.display = 'block';
-            } else {
-                submitButton.textContent = 'View Only';
+            
+            if (formData.status === 'pending_assistant') {
+                if (profile.role === 'Lab Assistant' || profile.role === 'lab_assistant') {
+                    submitButton.textContent = 'Update and Submit';
+                    disposalSection.style.display = 'none';
+                    inputs.forEach(input => input.disabled = false);
+                } else {
+                    submitButton.textContent = 'View Only';
+                    submitButton.disabled = true;
+                    inputs.forEach(input => input.disabled = true);
+                }
+            } 
+            else if (formData.status === 'pending_stores') {
+                if (profile.role === 'Stores' || profile.role === 'stores') {
+                    submitButton.textContent = 'Update and Save';
+                    disposalSection.style.display = 'block';
+                    inputs.forEach(input => input.disabled = false);
+                } else {
+                    submitButton.textContent = 'View Only';
+                    submitButton.disabled = true;
+                    inputs.forEach(input => input.disabled = true);
+                }
+            }
+            else if (formData.status === 'Approved, Disposed') {
+                submitButton.textContent = 'Disposal Completed';
                 submitButton.disabled = true;
+                disposalSection.style.display = 'block';
                 inputs.forEach(input => input.disabled = true);
             }
         } else {
@@ -470,7 +507,7 @@
     }
 
     function handleFormSubmission(event) {
-        event.preventDefault(); // Prevent default behavior on mobile
+        event.preventDefault();
         const urlParams = new URLSearchParams(window.location.search);
         const requestId = urlParams.get('requestId');
         const profile = JSON.parse(localStorage.getItem('profile') || '{}');
@@ -478,30 +515,27 @@
 
         if (!requestId) {
             formData = submitNewForm();
-        } else if ((profile.role === 'Lab Assistant' || profile.role === 'lab_assistant') && requestId) {
+        } else if (profile.role === 'Lab Assistant' || profile.role === 'lab_assistant') {
             formData = updateAssistantForm(requestId);
-        } else if ((profile.role === 'Stores' || profile.role === 'stores') && requestId) {
+        } else if (profile.role === 'Stores' || profile.role === 'stores') {
             formData = updateStoresForm(requestId);
+            
+            if (formData && formData.status === 'Approved, Disposed') {
+                moveToPastDisposals(formData);
+                removeFromMaintenanceRecords(formData);
+                removeFromInventory(formData);
+            }
         }
 
         if (formData) {
-            syncDisposalTables(formData);
-
-            if (formData.status === 'Approved, Disposed') {
-                moveToPastDisposals(formData);
-                removeFromMaintenanceRecords(formData);
-            }
-
+            updateFormInStorage(formData);
+            notifyDashboard(formData);
+            
             if (window.opener && !window.opener.closed) {
-                const messageType = !requestId ? 'formSubmitted' : 
-                                   ((profile.role === 'Lab Assistant' || profile.role === 'lab_assistant') ? 'assistantUpdateSubmit' : 'storesUpdateSave');
                 window.opener.postMessage({
-                    type: messageType,
-                    success: true,
+                    type: 'formUpdated',
                     requestId: formData.requestId,
-                    itemIds: formData.items.map(item => item.itemId),
-                    status: formData.status,
-                    formData: formData
+                    status: formData.status
                 }, '*');
                 window.close();
             } else {
@@ -539,6 +573,7 @@
             ]
         };
 
+        // Collect items data
         document.querySelectorAll('tbody tr').forEach((row, index) => {
             const itemData = {
                 itemId: row.dataset.itemId || '',
@@ -565,14 +600,6 @@
             return null;
         }
 
-        // Prevent duplicate storage
-        const existingForms = JSON.parse(localStorage.getItem('condemnationForms') || '[]');
-        const formExists = existingForms.some(f => f.requestId === formData.requestId);
-        if (!formExists) {
-            existingForms.push(formData);
-            localStorage.setItem('condemnationForms', JSON.stringify(existingForms));
-        }
-        localStorage.removeItem('condemnationFormData');
         alert('Form submitted to Lab Assistant!');
         return formData;
     }
@@ -585,6 +612,8 @@
             const updatedForm = forms[formIndex];
             updatedForm.items = [];
             updatedForm.status = 'pending_stores';
+            
+            // Update signatures
             updatedForm.preparedBy = {
                 name: document.querySelector('.signature-section div:first-child .signature-line input:first-child').value,
                 designation: document.querySelector('.signature-section div:first-child .signature-line input:last-child').value
@@ -593,6 +622,8 @@
                 name: document.querySelector('.signature-section div:last-child .signature-line input:first-child').value,
                 designation: document.querySelector('.signature-section div:last-child .signature-line input:last-child').value
             };
+            
+            // Update committee members
             updatedForm.committeeMembers = [
                 { name: "Dr. Krupashankara M.S", designation: "Principal" },
                 {
@@ -607,6 +638,7 @@
                 { name: document.querySelector('.committee-list p:last-child .signature-line input').value, designation: "" }
             ];
 
+            // Update items
             document.querySelectorAll('tbody tr').forEach((row, index) => {
                 const itemData = {
                     itemId: row.dataset.itemId || '',
@@ -633,8 +665,6 @@
                 return null;
             }
 
-            forms[formIndex] = updatedForm;
-            localStorage.setItem('condemnationForms', JSON.stringify(forms));
             alert('Form updated and submitted to Stores!');
             return updatedForm;
         }
@@ -650,6 +680,8 @@
             updatedForm.items = [];
             updatedForm.status = 'Approved, Disposed';
             updatedForm.disposalTimestamp = new Date().toISOString();
+            
+            // Update signatures
             updatedForm.preparedBy = {
                 name: document.querySelector('.signature-section div:first-child .signature-line input:first-child').value,
                 designation: document.querySelector('.signature-section div:first-child .signature-line input:last-child').value
@@ -658,6 +690,8 @@
                 name: document.querySelector('.signature-section div:last-child .signature-line input:first-child').value,
                 designation: document.querySelector('.signature-section div:last-child .signature-line input:last-child').value
             };
+            
+            // Update committee members
             updatedForm.committeeMembers = [
                 { name: "Dr. Krupashankara M.S", designation: "Principal" },
                 {
@@ -672,6 +706,26 @@
                 { name: document.querySelector('.committee-list p:last-child .signature-line input').value, designation: "" }
             ];
 
+            // Add disposal verification data
+            updatedForm.disposalVerification = {
+                name: document.querySelector('.disposal-section .disposal-verification .signature-line input:first-child')?.value || '',
+                designation: document.querySelector('.disposal-section .disposal-verification .signature-line input:last-child')?.value || '',
+                date: document.querySelector('.disposal-section .disposal-verification input[type="date"]')?.value || ''
+            };
+
+            // Add witnesses data
+            updatedForm.witnesses = [
+                {
+                    name: document.querySelector('.disposal-section .witnesses .committee-members-row:first-child .signature-line input:first-child')?.value || '',
+                    designation: document.querySelector('.disposal-section .witnesses .committee-members-row:first-child .signature-line input:last-child')?.value || ''
+                },
+                {
+                    name: document.querySelector('.disposal-section .witnesses .committee-members-row:last-child .signature-line input:first-child')?.value || '',
+                    designation: document.querySelector('.disposal-section .witnesses .committee-members-row:last-child .signature-line input:last-child')?.value || ''
+                }
+            ];
+
+            // Update items
             document.querySelectorAll('tbody tr').forEach((row, index) => {
                 const itemData = {
                     itemId: row.dataset.itemId || '',
@@ -698,22 +752,20 @@
                 return null;
             }
 
-            forms[formIndex] = updatedForm;
-            localStorage.setItem('condemnationForms', JSON.stringify(forms));
             alert('Form updated and items disposed!');
             return updatedForm;
         }
         return null;
     }
 
-    function syncDisposalTables(formData) {
+    function updateFormInStorage(formData) {
         const forms = JSON.parse(localStorage.getItem('condemnationForms') || '[]');
         const formIndex = forms.findIndex(f => f.requestId === formData.requestId);
 
         if (formIndex > -1) {
-            forms[formIndex] = formData; // Update existing form
+            forms[formIndex] = formData;
         } else {
-            forms.push(formData); // Add new form only if it doesn’t exist
+            forms.push(formData);
         }
 
         localStorage.setItem('condemnationForms', JSON.stringify(forms));
@@ -721,8 +773,7 @@
 
     function moveToPastDisposals(formData) {
         const pastDisposals = JSON.parse(localStorage.getItem('pastDisposals') || '[]');
-        const disposalEntry = { ...formData, disposalTimestamp: formData.disposalTimestamp };
-        pastDisposals.push(disposalEntry);
+        pastDisposals.push(formData);
         localStorage.setItem('pastDisposals', JSON.stringify(pastDisposals));
 
         // Remove from active forms
@@ -737,6 +788,27 @@
             !formData.items.some(item => item.itemId === record.itemId)
         );
         localStorage.setItem('maintenanceRecords', JSON.stringify(updatedRecords));
+    }
+
+    function removeFromInventory(formData) {
+        const inventory = JSON.parse(localStorage.getItem('inventory') || '[]');
+        const updatedInventory = inventory.filter(item => 
+            !formData.items.some(disposedItem => disposedItem.itemId === item.id)
+        );
+        localStorage.setItem('inventory', JSON.stringify(updatedInventory));
+    }
+
+    function notifyDashboard(formData) {
+        const notifications = JSON.parse(localStorage.getItem('disposalNotifications') || '{}');
+        
+        if (formData.status === 'pending_stores') {
+            notifications.stores = notifications.stores || [];
+            if (!notifications.stores.includes(formData.requestId)) {
+                notifications.stores.push(formData.requestId);
+            }
+        }
+        
+        localStorage.setItem('disposalNotifications', JSON.stringify(notifications));
     }
 </script>
 </body>
